@@ -10,4 +10,3 @@ CREATE VIEW need_meeting AS
                 OR last_meeting < SUBDATE(CURRENT_DATE(), INTERVAL 1 MONTH)
             )
 ;
-
