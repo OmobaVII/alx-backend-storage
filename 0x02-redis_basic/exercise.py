@@ -5,7 +5,7 @@ and write strings to Redis
 """
 import redis
 from uuid import uuid4
-from typing import Union
+from typing import Union, Callable
 
 
 class Cache:
@@ -29,13 +29,13 @@ class Cache:
         return key
 
     def get(self, key: str,
-            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
+            fn: Callable = None) -> Union[str, bytes, int, float, None]:
         """
         Retrieve data from redis using provided key
         and apply the callable option
         """
         data = self._redis.get(key)
-        if fn:
+        if data is not None and fn is not None:
             return fn(data)
         return data
 
