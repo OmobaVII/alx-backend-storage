@@ -43,10 +43,15 @@ class Cache:
         """
         retrieve and return data as a string
         """
-        return self.get(key, str)
+        return self._redis.get(key).decode("utf-8")
 
     def get_int(self, key, str) -> int:
         """
         retrieve and return data as an integer
         """
-        return self.get(key, int)
+        data = self._redis.get(key)
+        try:
+            data = int(value.decode("utf-8"))
+        except Exception as e:
+            data = 0
+        return data
