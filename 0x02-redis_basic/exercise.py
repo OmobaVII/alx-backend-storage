@@ -27,3 +27,26 @@ class Cache:
         self._redis.set(key, data)
 
         return key
+
+    def get(self, key: str, fn: Callable = None) -> \
+            Union[str, bytes, int, float, None]:
+        """
+        Retrieve data from redis using provided key
+        and apply the callable option
+        """
+        data = self._redis.get(key)
+        if data is not None and fn is not None:
+            return fn(data)
+        return data
+
+    def get_str(self, key: str) -> str:
+        """
+        retrieve and return data as a string
+        """
+        return self.get(key, str)
+
+    def get_int(self, key, str) -> int:
+        """
+        retrieve and return data as an integer
+        """
+        return self.get(key, int)
