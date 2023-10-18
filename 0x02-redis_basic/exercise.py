@@ -23,6 +23,6 @@ class Cache:
         given to the instance of Redis
         """
         key = str(uuid.uuid4())
-        self._redis.set(key, data)
+        self._redis.set(key, str(data))
 
         return key
