@@ -6,6 +6,24 @@ and write strings to Redis
 import redis
 from uuid import uuid4
 from typing import Union, Callable
+from functools import wraps
+
+
+def count_calls(method: Callable) -> Callable:
+    """
+    A decorator to count the number of times a method is called
+    and store it in redis
+    """
+    key = method.__qualname__
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """a wraps method"""
+        self._redis.incr(key)
+        result = method(self, *args, **kwargs)
+
+        return result
+    return wrapper
 
 
 class Cache:
@@ -17,7 +35,8 @@ class Cache:
         """
         self._redis = redis.Redis()
         self._redis.flushdb()
-
+    
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         returns a string representation of the id
