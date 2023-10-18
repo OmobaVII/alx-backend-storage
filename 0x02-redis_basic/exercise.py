@@ -10,11 +10,11 @@ import uuid
 class Cache:
     """creates a class Cache"""
 
-    def __init__(self):
+    def __init__(self, host='localhost', port=6379):
         """
         this defines the attribute of _redis
         """
-        self._redis = redis.Redis()
+        self._redis = redis.Redis(host=host, port=port)
         self._redis.flushdb()
 
     def store(self, data):
@@ -23,6 +23,6 @@ class Cache:
         given to the instance of Redis
         """
         key = str(uuid.uuid4())
-        self._redis.set(key, str(data))
+        self._redis.set(key, data)
 
         return key
