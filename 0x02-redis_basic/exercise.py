@@ -4,7 +4,7 @@ This module contains a class that is used to store
 and write strings to Redis
 """
 import redis
-import uuid
+from uuid import uuid4
 
 
 class Cache:
@@ -14,15 +14,15 @@ class Cache:
         """
         this defines the attribute of _redis
         """
-        self._redis = redis.Redis(host=host, port=port)
+        self._redis = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data):
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         returns a string representation of the id
         given to the instance of Redis
         """
-        key = str(uuid.uuid4())
+        key = str(uuid4())
         self._redis.set(key, data)
 
         return key
