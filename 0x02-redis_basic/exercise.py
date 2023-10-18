@@ -35,7 +35,7 @@ class Cache:
         and apply the callable option
         """
         data = self._redis.get(key)
-        if data is not None and fn is not None:
+        if fn:
             return fn(data)
         return data
 
