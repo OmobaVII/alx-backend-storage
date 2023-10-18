@@ -4,7 +4,7 @@ This module contains a class that is used to store
 and write strings to Redis
 """
 import redis
-from uuid import uuid4
+import uuid
 
 
 class Cache:
@@ -22,7 +22,6 @@ class Cache:
         returns a string representation of the id
         given to the instance of Redis
         """
-        key = str(uuid4())
+        key = str(uuid.uuid4())
         self._redis.set(key, data)
-
         return key
