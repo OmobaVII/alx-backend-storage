@@ -7,7 +7,6 @@ of a particular URL and returns it
 import redis
 import requests
 red = redis.Redis()
-counts = 0
 
 
 def get_page(url: str) -> str:
